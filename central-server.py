@@ -2,6 +2,7 @@ import socket
 import threading
 from queue import Queue
 from itertools import count
+import json
 
 HOST = 'localhost'
 PORT = 5000
@@ -37,11 +38,11 @@ def handle_client(conn, addr):
             if not client_queue.empty():
                 command = client_queue.get()
                 print(f"Sending command {command} to client {client_id}")
-                conn.sendall(command.encode())
+                conn.sendall(json.dumps(command).encode())
                 response = conn.recv(1024).decode()
                 print(f"Received response from client {client_id}: {response}")
             else:
-                threading.Event().wait(2)  # Wait for 2 seconds before checking again
+                threading.Event().wait(1)  # Wait for 1 seconds before checking again
         except Exception as e:
             print(f"Error receiving data from client {client_id}: {e}")
             break
@@ -53,12 +54,12 @@ def handle_client(conn, addr):
 
 def process_commands():
     while True:
-        command_id, command, client_id = COMMANDS.get()
+        command_id, command = COMMANDS.get()
         if command_id == -1:
             break
         if CLIENTS:
-            _, _, _, client_queue = min(CLIENTS, key=lambda x: x[3].qsize())
-            client_queue.put(command)
+            client_id, _, _, client_queue = min(CLIENTS, key=lambda x: x[3].qsize())
+            client_queue.put({"client_id": client_id, "command_id": command_id, "command": command})
 
 def start_server():
     port = find_free_port(PORT)
@@ -79,10 +80,10 @@ def ask_for_commands():
         if not command:  # Check if the command is empty
             continue
         if command.lower() == 'exit':
-            COMMANDS.put((-1, '', None))
+            COMMANDS.put((-1, ''))
             break
         else:
-            COMMANDS.put((next(command_counter), command, None))
+            COMMANDS.put((next(command_counter), command))
 
 def monitor_threads():
     with open('thread_status.txt', 'w') as file:
