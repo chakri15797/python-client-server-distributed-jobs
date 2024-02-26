@@ -1,6 +1,6 @@
 Client Server Architecture
 ---------------------------------
-Step 1:(one terminla)
+Step 1:(one terminal)
 -> python3 central-server.py
 
 Step 2:(different terminal)
