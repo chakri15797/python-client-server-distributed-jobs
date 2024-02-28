@@ -10,7 +10,7 @@ import sys
 import queue
 from signal import pthread_kill, SIGUSR1, SIGTSTP
 
-HOST = 'localhost'
+HOST = '0.0.0.0'
 PORT = 5000
 FILENAME = 'server_info.txt'
 COMMANDS = Queue()
@@ -29,6 +29,8 @@ def is_socket_closed(sock):
         else:
             return False
     except socket.error as e:
+        return True
+    except socket.timeout:
         return True
 
 def find_free_port(start_port):
@@ -77,6 +79,7 @@ def handle_client(conn, addr):
         CLIENTS.remove(temp)
         THREAD_STATUS[client_id] = 'Disconnected'  # Update status when client disconnects
     conn.close()
+    print("Exiting handle_client")
 
 
 def process_commands():
@@ -152,6 +155,16 @@ def monitor_clients():
 def exit_handler():
     print("Exiting...")
 
+def kill_threads():
+    while True:
+        if SHUTDOWN_FLAG:
+            time.sleep(1)
+            for t in THREADS:
+                if t is not None and t.is_alive():
+                    pthread_kill(t.ident, SIGTSTP)
+            break
+    print("Exiting kill_threads")
+
 if __name__ == "__main__":
     try:
         directory = 'logs'
@@ -161,6 +174,7 @@ if __name__ == "__main__":
         #THREADS.append(t)
         (t := threading.Thread(name="monitor_clients",target=monitor_clients)).start()
         THREADS.append(t)
+        threading.Thread(name="kill_threads",target=kill_threads).start()
         start_server()
     except KeyboardInterrupt:
         SHUTDOWN_FLAG = True  # Set the shutdown flag when Ctrl+C is pressed     
