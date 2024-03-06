@@ -13,6 +13,7 @@ This project implements a client-server system where clients can connect to a se
 
 ## Flow Diagrams
 ### Server Flow
+```
                     +---------------------+
                     |    Start Server     |
                     +----------+----------+
@@ -27,15 +28,15 @@ This project implements a client-server system where clients can connect to a se
                     +----------+----------+
                                |
                     +----------v----------+
-         +----------+   Listen for Client  +----------+
-         |          |      Connections     |          |
+         +----------+   Listen for Client +-----------+
+         |          |      Connections    |           |
          |          +----------+----------+           |
          |                     |                      |
          |                     |                      |
 +--------+--------+   +--------v--------+   +---------v-------+
 |  Handle Client  |   | Ask for Commands|   | Process Commands|
 |    Connection   |   |     (Thread)    |   |     (Thread)    |
-+--------+--------+   +-------+---------+   +--------+--------+
++--------+--------+   +-------+---------+   +---------+-------+
          |                    |                       |
          |                    v                       |
          |         +----------+----------+            |
@@ -43,18 +44,19 @@ This project implements a client-server system where clients can connect to a se
          |         +----------+----------+            |
          |                    |                       |
          |                    v                       v
-         |         +----------+----------+  +--------+--------+
+         |         +----------+----------+  +---------+-------+
          |         | Add Command to Queue|  |Get Command from |
          |         +----------+----------+  |      Queue      |
-         |                    |             +--------+--------+
-         |                    |                      |
-         |                    |                      v
-         |                    +----------------+-----+-----+
+         |                    |             +---------+-------+
+         |                    |                       |
+         |                    |                       v
+         |                    +----------------+------+------+
          |                                     | Load Balance|
          |                                     | to Clients  |
-         |                                     +-----+-----+
-         |                                           |
-         +-------------------------------------------+
+         |                                     +------+------+
+         |                                            |
+         +--------------------------------------------+
+```
 
 
 
