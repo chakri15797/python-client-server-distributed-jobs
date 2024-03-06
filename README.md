@@ -29,9 +29,9 @@ This project implements a client-server system where clients can connect to a se
                     +----------v----------+
          +----------+   Listen for Client  +----------+
          |          |      Connections     |          |
-         |          +----------+----------+          |
-         |                     |                     |
-         |                     v                     v
+         |          +----------+----------+           |
+         |                     |                      |
+         |                     v                      v
 +--------+--------+   +-----------------+   +-----------------+
 |  Handle Client  |   | Ask for Commands|   | Process Commands|
 |    Connection   |   |     (Thread)    |   |     (Thread)    |
