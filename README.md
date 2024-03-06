@@ -2,14 +2,14 @@
 This project implements a client-server system where clients can connect to a server and execute commands received from the server. The server acts as a central hub, receiving commands from the user and distributing them to the connected clients. The clients execute the commands and send the output back to the server.
 
 ## Features
-⋅⋅* Clients can connect to the server using the server's host and port information
-⋅⋅* The server listens for incoming client connections and assigns a unique ID to each client
-⋅⋅* The server receives commands from the user and distributes them to the available clients in a load-balanced manner
-⋅⋅* Clients execute the received commands and send the output back to the server
-⋅⋅* The server displays the output received from the clients
-⋅⋅* The system supports multiple concurrent clients and commands
-⋅⋅* Clients log their activity and output in individual log files
-⋅⋅* The server monitors the status of client connections and threads
+* Clients can connect to the server using the server's host and port information
+* The server listens for incoming client connections and assigns a unique ID to each client
+* The server receives commands from the user and distributes them to the available clients in a load-balanced manner
+* Clients execute the received commands and send the output back to the server
+* The server displays the output received from the clients
+* The system supports multiple concurrent clients and commands
+* Clients log their activity and output in individual log files
+* The server monitors the status of client connections and threads
 
 ## Flow Diagrams
 ### Server Flow
@@ -58,9 +58,9 @@ This project implements a client-server system where clients can connect to a se
 
 This diagram illustrates the flow of the server component. The server starts by finding a free port, writing the server information to a file, and then listening for incoming client connections. Three main threads are spawned: "Handle Client," "Ask for Commands," and "Process Commands."
 
-⋅⋅* The "Handle Client" thread manages client connections, receives output from clients, and handles client disconnections.
-⋅⋅* The "Ask for Commands" thread prompts the user to enter commands and adds them to a queue.
-⋅⋅* The "Process Commands" thread retrieves commands from the queue and load-balances them to the available clients.
+* The "Handle Client" thread manages client connections, receives output from clients, and handles client disconnections.
+* The "Ask for Commands" thread prompts the user to enter commands and adds them to a queue.
+* The "Process Commands" thread retrieves commands from the queue and load-balances them to the available clients.
 
 ### Client Flow
 
@@ -112,16 +112,16 @@ The server also logs the status of client connections and threads in the logs/th
 ### Dependencies
 This project requires Python 3.x and the following libraries:
 
-..* socket
-..* threading
-..* queue
-..* itertools
-..* json
-..* atexit
-..* os
-..* time
-..* sys
-..* signal
+* socket
+* threading
+* queue
+* itertools
+* json
+* atexit
+* os
+* time
+* sys
+* signal
 No additional dependencies need to be installed.
 
 ### Contributing
