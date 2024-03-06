@@ -31,18 +31,18 @@ This project implements a client-server system where clients can connect to a se
          |          |      Connections     |          |
          |          +----------+----------+           |
          |                     |                      |
-         |                     v                      v
-+--------+--------+   +-----------------+   +-----------------+
+         |                     |                      |
++--------+--------+   +--------v--------+   +---------v-------+
 |  Handle Client  |   | Ask for Commands|   | Process Commands|
 |    Connection   |   |     (Thread)    |   |     (Thread)    |
 +--------+--------+   +-------+---------+   +--------+--------+
          |                    |                       |
          |                    v                       |
-         |         +----------+----------+           |
-         |         |  User Input Command |           |
-         |         +----------+----------+           |
-         |                    |                      |
-         |                    v                      v
+         |         +----------+----------+            |
+         |         |  User Input Command |            |
+         |         +----------+----------+            |
+         |                    |                       |
+         |                    v                       v
          |         +----------+----------+  +--------+--------+
          |         | Add Command to Queue|  |Get Command from |
          |         +----------+----------+  |      Queue      |
