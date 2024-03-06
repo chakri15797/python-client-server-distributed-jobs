@@ -56,6 +56,8 @@ This project implements a client-server system where clients can connect to a se
          |                                           |
          +-------------------------------------------+
 
+
+
 This diagram illustrates the flow of the server component. The server starts by finding a free port, writing the server information to a file, and then listening for incoming client connections. Three main threads are spawned: "Handle Client," "Ask for Commands," and "Process Commands."
 
 * The "Handle Client" thread manages client connections, receives output from clients, and handles client disconnections.
